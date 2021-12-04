@@ -13,6 +13,8 @@ import (
 
 var version string
 
+//http://localhost:8888/getvalue?key=burcu
+
 type App struct {
 	Port   string
 	Repo   *repository.InMemoryStore

@@ -32,7 +32,7 @@ func (st *InMemoryStore) GetItemFromStore(key string) (string, error) {
 	data := st.store[key]
 
 	if data == "" {
-		return data, errors.New("key does not found in the storage")
+		return data, errors.New(key + " does not found in the storage")
 	}
 	return data, nil
 }
