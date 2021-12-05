@@ -8,6 +8,7 @@ import (
 type DataStore interface {
 	AddItemToStore(key string, value string)
 	GetItemFromStore(key string) (string, error)
+	FlushStore()
 }
 
 type ApiServer struct {
@@ -68,5 +69,15 @@ func (a *ApiServer) AddItem() http.HandlerFunc {
 		a.store.AddItemToStore(body.Key, body.Value)
 
 		ResponseWithJSON(w, http.StatusOK, nil) //statusaccepted??
+	}
+}
+
+func (a *ApiServer) Flush() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		a.store.FlushStore()
+
+		ResponseWithJSON(w, http.StatusOK, nil)
 	}
 }

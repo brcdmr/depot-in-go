@@ -36,3 +36,9 @@ func (st *InMemoryStore) GetItemFromStore(key string) (string, error) {
 	}
 	return data, nil
 }
+
+func (st *InMemoryStore) FlushStore() {
+	st.lock.Lock()
+	defer st.lock.Unlock()
+	st.store = make(map[string]string)
+}
