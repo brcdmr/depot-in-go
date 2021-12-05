@@ -6,10 +6,10 @@ import (
 )
 
 type ErrorResponse struct {
-	Code    int      `json:"code"`
-	Status  string   `json:"status"`
-	Message string   `json:"message"`
-	Errors  []string `json:"erros"`
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+	Message string `json:"message"`
+	//Errors  []string `json:"errors"`
 }
 
 func ResponseWithJSON(w http.ResponseWriter, statusCode int, payload interface{}) {

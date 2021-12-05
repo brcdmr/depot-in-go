@@ -12,9 +12,9 @@ type InMemoryStore struct {
 	lock sync.RWMutex
 }
 
-func NewInMemoryStore() *InMemoryStore {
+func NewInMemoryStore(initialStoreData map[string]string) *InMemoryStore {
 	return &InMemoryStore{
-		map[string]string{},
+		initialStoreData, //map[string]string{}
 		sync.RWMutex{},
 	}
 }
@@ -41,4 +41,10 @@ func (st *InMemoryStore) FlushStore() {
 	st.lock.Lock()
 	defer st.lock.Unlock()
 	st.store = make(map[string]string)
+}
+
+func (st *InMemoryStore) GetAllStoreData() map[string]string {
+	st.lock.Lock()
+	defer st.lock.Unlock()
+	return st.store
 }
