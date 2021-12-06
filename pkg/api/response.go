@@ -31,10 +31,3 @@ func ResponseError(w http.ResponseWriter, statusCode int, errMessage string) {
 	// ResponseWithJSON(w, statusCode, map[string]string{"Error": errMessage})
 	ResponseWithJSON(w, statusCode, ErrorResponse{Code: statusCode, Status: "Error", Message: errMessage})
 }
-
-// func logMiddleware(next http.Handler) http.Handler {
-// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-// 		log.Println(r.URL.Path)
-// 		next.ServeHTTP(w, r)
-// 	})
-// }

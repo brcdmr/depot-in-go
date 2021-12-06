@@ -3,7 +3,6 @@ package main
 import (
 	"depot/pkg/api"
 	"depot/pkg/repository"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -15,13 +14,13 @@ import (
 
 var version string
 
-//http://localhost:8888/getvalue?key=burcu
-
 type App struct {
-	Port    string
-	Repo    *repository.InMemoryStore
-	Server  api.ApiServer
-	FileSys repository.FileSystem
+	Port      string
+	LogToFile string
+	Repo      *repository.InMemoryStore
+	Server    api.ApiServer
+	FileSys   repository.FileSystem
+	Mux       *http.ServeMux
 }
 
 func main() {
@@ -29,9 +28,19 @@ func main() {
 	a := App{}
 
 	a.Port = os.Getenv("PORT")
+	a.LogToFile = os.Getenv("WRITELOGFILE")
 
 	if a.Port == "" {
 		a.Port = "8888"
+	}
+
+	if a.LogToFile == "YES" {
+
+		logFileName := "application.log"
+		logFile, _ := os.OpenFile(logFileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+		defer logFile.Close()
+
+		log.SetOutput(logFile)
 	}
 
 	a.initialize()
@@ -39,7 +48,7 @@ func main() {
 	a.routes()
 	go a.startFileScheduler(10)
 	a.run()
-	log.Printf("version %s listening on port %s", version, a.Port)
+
 	select {}
 
 }
@@ -68,14 +77,17 @@ func (a *App) initialize() {
 }
 
 func (a *App) routes() {
-	http.HandleFunc("/getvalue", a.Server.GetValue().ServeHTTP)
-	http.HandleFunc("/setvalue", a.Server.AddValue().ServeHTTP)
-	http.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
+	a.Mux = http.NewServeMux()
+	//Mux := http.NewServeMux()
+	a.Mux.HandleFunc("/getvalue", a.Server.GetValue().ServeHTTP)
+	a.Mux.HandleFunc("/setvalue", a.Server.AddValue().ServeHTTP)
+	a.Mux.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
 }
 
 func (a *App) run() {
 
-	err := http.ListenAndServe(":"+a.Port, nil)
+	log.Printf("version %s listening on port %s", version, a.Port)
+	err := http.ListenAndServe(":"+a.Port, api.LoggingMiddleware(a.Mux))
 
 	if err != nil {
 		log.Fatal(err)
@@ -86,8 +98,9 @@ func (a *App) run() {
 func (a *App) startFileScheduler(duration time.Duration) {
 
 	for range time.Tick(duration * time.Second) {
-		str := "Hi! " + duration.String() + " seconds have passed"
-		echo(str)
+		// str := "Hi! " + duration.String() + " seconds have passed and file saved!!"
+		// echo(str)
+		log.Printf("Hi! %s seconds have passed and called write file function!!", duration.String())
 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
 	}
 	// time.AfterFunc(duration, func() {
@@ -95,6 +108,6 @@ func (a *App) startFileScheduler(duration time.Duration) {
 	// })
 }
 
-func echo(s string) {
-	fmt.Println(s)
-}
+// func echo(s string) {
+// 	fmt.Println(s)
+// }

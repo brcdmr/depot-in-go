@@ -28,9 +28,12 @@ func (fs *FileSystem) WriteFile(data map[string]string) {
 		log.Fatalf("File data marshal error: %s %v", data, err)
 	}
 	err = os.WriteFile(fs.Path, dataToJson, 0777)
+
 	if err != nil {
 		log.Fatalf("File system writing error: %s %v", dataToJson, err)
 	}
+
+	log.Printf("File was saved: %s!", fs.Path)
 }
 
 func (fs *FileSystem) ReadFile() map[string]string {
