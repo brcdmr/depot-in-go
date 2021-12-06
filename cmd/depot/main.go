@@ -68,8 +68,8 @@ func (a *App) initialize() {
 }
 
 func (a *App) routes() {
-	http.HandleFunc("/getvalue", a.Server.GetItem().ServeHTTP)
-	http.HandleFunc("/setvalue", a.Server.AddItem().ServeHTTP)
+	http.HandleFunc("/getvalue", a.Server.GetValue().ServeHTTP)
+	http.HandleFunc("/setvalue", a.Server.AddValue().ServeHTTP)
 	http.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
 }
 

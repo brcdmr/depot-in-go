@@ -24,14 +24,14 @@ func NewApiServer(s DataStore) ApiServer {
 	return ApiServer{store: s}
 }
 
-func (a *ApiServer) GetItem() http.HandlerFunc {
+func (a *ApiServer) GetValue() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		//key := strings.TrimPrefix(r.URL.Path, "/getvalue/")
 		keys := r.URL.Query()["key"]
 
 		if len(keys[0]) < 1 {
-			ResponseError(w, http.StatusNotFound, "error")
+			ResponseError(w, http.StatusNotFound, "Key parameter not Found in URL")
 			return
 		}
 
@@ -48,7 +48,7 @@ func (a *ApiServer) GetItem() http.HandlerFunc {
 	}
 }
 
-func (a *ApiServer) AddItem() http.HandlerFunc {
+func (a *ApiServer) AddValue() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		decoder := json.NewDecoder(r.Body)
@@ -61,10 +61,6 @@ func (a *ApiServer) AddItem() http.HandlerFunc {
 			ResponseError(w, http.StatusNotFound, err.Error())
 			return
 		}
-
-		// r.ParseForm()
-		// key := r.Form.Get("key")
-		// value := r.Form.Get("value")
 
 		a.store.AddItemToStore(body.Key, body.Value)
 
