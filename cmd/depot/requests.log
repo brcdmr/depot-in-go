@@ -1,0 +1,24 @@
+2021/12/06 20:23:26 version  listening on port 8888
+2021/12/06 20:23:36 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:23:36 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:23:42 url: /getvalue?key=burcu32342 - method: GET	 remoteIP: [::1]:61351	 perf: 4.495857554s
+2021/12/06 20:23:46 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:23:46 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:23:56 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:23:56 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:06 url: /getvalue?key=burcu32342 - method: GET	 remoteIP: [::1]:61351	 perf: 18.676µs
+2021/12/06 20:24:06 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:06 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:12 url: /getvalue?key=burcu32342 - method: GET	 remoteIP: [::1]:61351	 perf: 22.639µs
+2021/12/06 20:24:15 url: /flush - method: GET	 remoteIP: [::1]:61351	 perf: 16.107µs
+2021/12/06 20:24:16 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:16 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:17 url: /flush - method: GET	 remoteIP: [::1]:61351	 perf: 13.075µs
+2021/12/06 20:24:26 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:26 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:36 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:36 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:46 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:46 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
+2021/12/06 20:24:56 Hi! 10ns seconds have passed and called write file function!!
+2021/12/06 20:24:56 File was saved: /Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json!
