@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -55,14 +56,14 @@ func main() {
 }
 
 func (a *App) initialize() {
-	// testpath, err := filepath.Abs(filepath.Dir("test.json"))
 
-	// fmt.Print(testpath)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	dir, err := filepath.Abs("./../../")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	a.FileSys.Name = "test.json"
-	a.FileSys.Path = "/Users/burcudemirel/Desktop/Go/depot-in-go/tmp/test.json"
+	a.FileSys.Path = dir + "/tmp/" + a.FileSys.Name
 
 	isExist := a.FileSys.IsFileExist()
 
@@ -98,17 +99,12 @@ func (a *App) run() {
 
 func (a *App) startFileScheduler(duration time.Duration) {
 
-	for range time.Tick(duration * time.Second) {
-		// str := "Hi! " + duration.String() + " seconds have passed and file saved!!"
-		// echo(str)
-		log.Printf("Hi! %s seconds have passed and called write file function!!", duration.String())
+	for range time.Tick(duration * time.Minute) {
+
+		log.Printf("%s minutes have passed and called write file function!!", duration.String())
 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
 	}
 	// time.AfterFunc(duration, func() {
 	// 	a.FileSys.WriteFile(a.Repo.GetAllStoreData())
 	// })
 }
-
-// func echo(s string) {
-// 	fmt.Println(s)
-// }
