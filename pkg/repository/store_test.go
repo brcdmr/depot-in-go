@@ -64,8 +64,8 @@ func Test_GetItemFromStore(t *testing.T) {
 				keyWord: "Paris",
 			}, {
 				name:    "GetItemFromStore case #3",
-				want:    "Turkey",
-				keyWord: "",
+				want:    "Spain",
+				keyWord: "Madrid",
 			},
 		}
 
@@ -91,6 +91,33 @@ func Test_GetItemFromStore(t *testing.T) {
 
 			})
 		}
+
+	})
+}
+
+func Test_GetItemFromStore_ErrorCase(t *testing.T) {
+	t.Run(t.Name(), func(t *testing.T) {
+
+		initData := map[string]string{
+			"Amsterdam": "Netherlands",
+			"Brussels":  "Belgium",
+			"Paris":     "France",
+			"Madrid":    "Spain",
+		}
+
+		inMemStore := repository.NewInMemoryStore(initData)
+
+		t.Run(t.Name(), func(t *testing.T) {
+			_, err := inMemStore.GetItemFromStore("Istanbul")
+			// if got != cs.want {
+			// 	t.Errorf("Not correct get item from store, got %q, want %q", got, cs.want)
+			// }
+
+			if err == nil {
+				t.Errorf("Expected error case, got %s", err)
+			}
+
+		})
 
 	})
 }
