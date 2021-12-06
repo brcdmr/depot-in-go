@@ -10,9 +10,6 @@ import (
 	"time"
 )
 
-//"github.com/brcdmr/depot-in-go/pkg/api"
-//"github.com/brcdmr/depot-in-go/pkg/repository"
-
 var version string
 
 type App struct {
