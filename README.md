@@ -1,6 +1,6 @@
 # A RESTful API with Go --> depot-in-go
 
-## Download & Run
+## Project Guide 
 ```bash
 # Download this project
 go get github.com/brcdmr/depot-in-go
@@ -14,7 +14,7 @@ go build
 
 You can call with default port, or you can change it.
 
-# API Endpoint : http://localhost:8888
+# Default API Endpoint : http://localhost:8888
 ```
 
 ## Project Structure
@@ -42,3 +42,14 @@ You can call with default port, or you can change it.
 └── go.mod
 └── Makefile
 ```
+
+
+## API 
+#### /getvalue/:key
+* `GET` : Get a value from in memoryStore
+
+#### /setvalue
+* `POST` : Send key / value pair in request body to store data in memoryStore
+
+#### /flush
+* `GET` : Flush store data
