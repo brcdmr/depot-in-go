@@ -18,6 +18,9 @@ make
 ./depot
 // after running executable, listening port and version number can be seen
 
+make docker
+// deploy to docker
+
 You can call with default port, or you can change it.
 
 # Default API Endpoint : http://localhost:8888

@@ -40,9 +40,8 @@ func main() {
 	a.initialize()
 
 	a.routes()
-	go a.startFileScheduler(Interval)
 	a.run(Port)
-
+	go a.startFileScheduler(Interval)
 	select {}
 
 }
