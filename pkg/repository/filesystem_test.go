@@ -34,6 +34,18 @@ func Test_IsFileExist_False(t *testing.T) {
 	})
 }
 
-func Test_WriteFile(t *testing.T) {
+// func Test_WriteFile(t *testing.T) {
+// 	t.Run(t.Name(), func(t *testing.T) {
+// 		fileSys := &repository.FileSystem{Path: "/testfile.json", Name: ""}
+// 		fileData := map[string]string{
+// 			"hello": "file",
+// 		}
+// 		fileSys.WriteFile(fileData)
+// 		got := fileSys.IsFileExist()
 
-}
+// 		if !got {
+// 			t.Fatalf("Write file error")
+// 		}
+
+// 	})
+// }

@@ -44,6 +44,14 @@ func (fs *FileSystem) ReadFile() map[string]string {
 	return fs.convertFileData(fileDataBytes)
 }
 
+func (fs *FileSystem) RemoveFile() {
+	err := os.Remove(fs.Path)
+
+	if err != nil {
+		log.Fatalf("File remove error: %s %v", fs.Path, err)
+	}
+}
+
 func (fs *FileSystem) convertFileData(fileData []byte) map[string]string {
 	var convertedData map[string]string
 	err := json.Unmarshal(fileData, &convertedData)
