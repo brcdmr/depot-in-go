@@ -9,8 +9,12 @@ go get github.com/brcdmr/depot-in-go
 ```bash
 # Build and Run
 cd depot-in-go
-go build
-./depot-int-go
+make
+// after running  -make- command, building will be started along with below build command 
+// go build -ldflags "-X main.version=v1.0.0-7-g5222465-dirty" -o depot ./cmd/depot
+
+./depot
+// after running executable, listening port and version number can be seen
 
 You can call with default port, or you can change it.
 

@@ -4,7 +4,7 @@ VERSION=$(shell git describe --tags --long --dirty 2>/dev/null)
 
 ## we must have tagged the repo at least once for VERSION to work
 ifeq ($(VERSION),)
-	VERSION = UNKNOWN
+	VERSION = 0.0.1
 endif
 
 depot: $(SOURCES)
