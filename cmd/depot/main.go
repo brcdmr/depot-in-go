@@ -41,6 +41,7 @@ func main() {
 		defer logFile.Close()
 
 		log.SetOutput(logFile)
+
 	}
 
 	a.initialize()
