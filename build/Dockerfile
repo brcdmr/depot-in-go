@@ -11,6 +11,7 @@ COPY go.mod /home/depot
 COPY go.sum /home/depot
 COPY cmd    /home/depot/cmd
 COPY pkg    /home/depot/pkg
+COPY tmp    /home/depot/tmp
 COPY *.go   /home/depot
 
 ARG VERSION
