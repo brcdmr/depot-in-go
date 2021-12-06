@@ -14,4 +14,5 @@ func LoggingMiddleware(target http.Handler) http.Handler {
 		log.Printf("url: %s - method: %s\t remoteIP: %s\t perf: %v", r.RequestURI, r.Method, r.RemoteAddr, time.Since(startTimer))
 
 	})
+
 }
