@@ -30,7 +30,6 @@ func Test_IsFileExist_False(t *testing.T) {
 		if got != want {
 			t.Fatalf("fileExist should return %t, but got value %t", want, got)
 		}
-
 	})
 }
 
