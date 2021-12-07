@@ -24,7 +24,7 @@ func main() {
 
 	var Port string = os.Getenv("PORT")
 	var LogToFile string = os.Getenv("WRITELOGFILE")
-	var Interval time.Duration = 1
+	var Interval time.Duration = 30
 
 	if Port == "" {
 		Port = "8888"
@@ -40,8 +40,8 @@ func main() {
 	a.initialize()
 
 	a.routes()
-	a.run(Port)
 	go a.startFileScheduler(Interval)
+	a.run(Port)
 	select {}
 
 }
@@ -86,7 +86,7 @@ func (a *App) run(port string) {
 
 func (a *App) startFileScheduler(duration time.Duration) {
 
-	for range time.Tick(duration * time.Minute) {
+	for range time.Tick(duration * time.Second) { // to do: change to min
 		log.Printf("%s minutes have passed and called write file function!!", duration.String())
 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
 	}
