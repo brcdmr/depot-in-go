@@ -39,13 +39,13 @@ You can call with default port, or you can change it.
 │   │   ├── api_test.go  
 │   │   ├── logging.go  
 │   │   ├── response.go  
-│   │   ├── api.out
+│   │   └── apitestcoverage.out apiPackage Test Coverage, for html view run -> go tool cover -html=apitestcoverage.out
 │   └── repository          
 │       ├── filesystem.go   
 │       ├── filesystem_test.go  
 │       ├── store.go  
 │       ├── store_test.go  
-│       └── repository.out
+│       └── repository.out  repositoryPackage Test Coverage, for html view run -> go tool cover -html=repository.out
 ├── tmp
 │   └── test.json
 └── go.mod

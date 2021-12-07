@@ -73,7 +73,6 @@ func Test_GetValue_StatusNotFound_KeyParameter(t *testing.T) {
 
 	})
 }
-
 func Test_AddValue_StatusOK(t *testing.T) {
 	store := StubDataStore{
 		map[string]string{},
@@ -125,7 +124,7 @@ func Test_AddValue_StatusBadRequest(t *testing.T) {
 	})
 }
 
-func TestFlush_StatusCode_NoContent(t *testing.T) {
+func Test_Flush_StatusCode_NoContent(t *testing.T) {
 	store := StubDataStore{
 		map[string]string{
 			"key1": "value1",
@@ -149,7 +148,7 @@ func TestFlush_StatusCode_NoContent(t *testing.T) {
 	})
 }
 
-func TestFlush_StoreLen_Zero(t *testing.T) {
+func Test_Flush_StoreLen_Zero(t *testing.T) {
 	store := StubDataStore{
 		map[string]string{
 			"key1": "value1",
