@@ -58,13 +58,13 @@ func (a *ApiServer) AddValue() http.HandlerFunc {
 		err := decoder.Decode(&body)
 
 		if err != nil {
-			ResponseError(w, http.StatusNotFound, err.Error())
+			ResponseError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 
 		a.store.AddItemToStore(body.Key, body.Value)
 
-		ResponseWithJSON(w, http.StatusOK, nil) //statusaccepted??
+		ResponseWithJSON(w, http.StatusOK, r.Body) //statusaccepted??
 	}
 }
 
@@ -74,6 +74,6 @@ func (a *ApiServer) Flush() http.HandlerFunc {
 
 		a.store.FlushStore()
 
-		ResponseWithJSON(w, http.StatusOK, nil)
+		ResponseWithJSON(w, http.StatusNoContent, nil)
 	}
 }

@@ -103,7 +103,29 @@ func Test_AddValue_StatusOK(t *testing.T) {
 	})
 }
 
-func TestFlush_StatusCode_OK(t *testing.T) {
+func Test_AddValue_StatusBadRequest(t *testing.T) {
+	store := StubDataStore{
+		map[string]string{},
+	}
+
+	server := &ApiServer{&store}
+
+	t.Run(t.Name(), func(t *testing.T) {
+
+		postBodyJson := "{\"Key\":\"test1\"\"Value\":\"test11\"}"
+
+		request := httptest.NewRequest(http.MethodPost, "/setvalue", strings.NewReader(string(postBodyJson)))
+		request.Header.Set("Content-Type", "application/json")
+		response := httptest.NewRecorder()
+
+		server.AddValue().ServeHTTP(response, request)
+
+		assertStatus(t, http.StatusBadRequest, response.Code)
+
+	})
+}
+
+func TestFlush_StatusCode_NoContent(t *testing.T) {
 	store := StubDataStore{
 		map[string]string{
 			"key1": "value1",
@@ -119,7 +141,7 @@ func TestFlush_StatusCode_OK(t *testing.T) {
 
 		server.Flush().ServeHTTP(response, request)
 
-		assertStatus(t, http.StatusOK, response.Code)
+		assertStatus(t, http.StatusNoContent, response.Code)
 
 		if len(store.store) != 0 {
 			t.Errorf("Not correct flush, store count %d, should be %d", len(store.store), 0)
