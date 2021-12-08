@@ -37,7 +37,6 @@ func createTempFile(t testing.TB, initialData []byte) (StubFileSystem, func()) {
 	}
 
 	return tmp, RemoveFile
-	//ioutil.WriteFile(tmp.Path, json.Marshal(initData), 0777)
 
 }
 
@@ -70,6 +69,8 @@ func Test_WriteFile(t *testing.T) {
 		if len(got) == 0 {
 			t.Fatalf("WriteFile error: %s", got)
 		}
+
+		fileSys.RemoveFile()
 	})
 }
 func Test_ReadFile(t *testing.T) {
