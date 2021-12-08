@@ -41,6 +41,37 @@ func createTempFile(t testing.TB, initialData []byte) (StubFileSystem, func()) {
 
 }
 
+func initWriteStub(t testing.TB) StubFileSystem {
+	dir, _ := filepath.Abs("./")
+
+	tmp := StubFileSystem{}
+
+	tmp.Path = dir
+	tmp.Name = "unitTestW.json"
+
+	return tmp
+}
+
+func Test_WriteFile(t *testing.T) {
+
+	t.Run(t.Name(), func(t *testing.T) {
+
+		data := map[string]string{
+			"key1": "value1",
+			"key2": "value2",
+		}
+
+		stub := initWriteStub(t)
+
+		fileSys := &repository.FileSystem{Path: stub.Path, Name: stub.Name}
+
+		got := fileSys.WriteFile(data)
+
+		if len(got) == 0 {
+			t.Fatalf("WriteFile error: %s", got)
+		}
+	})
+}
 func Test_ReadFile(t *testing.T) {
 
 	t.Run(t.Name(), func(t *testing.T) {
@@ -61,7 +92,37 @@ func Test_ReadFile(t *testing.T) {
 		if !equal {
 			t.Fatalf("ReadFile error: %s", convertToJson(got))
 		}
-		//testFile.File.RemoveFile()
+	})
+}
+
+func Test_RemoveFile(t *testing.T) {
+
+	t.Run(t.Name(), func(t *testing.T) {
+
+		data := map[string]string{}
+
+		testFile, _ := createTempFile(t, convertToJson(data))
+
+		fileSys := &repository.FileSystem{Path: testFile.Path, Name: testFile.Name}
+
+		err := fileSys.RemoveFile()
+
+		if err != nil {
+			t.Fatalf("RemoveFile error: %s", err)
+		}
+	})
+}
+func Test_RemoveFile_ErrCase(t *testing.T) {
+
+	t.Run(t.Name(), func(t *testing.T) {
+
+		fileSys := &repository.FileSystem{Path: "testFile.Path", Name: "testFile.Name"}
+
+		err := fileSys.RemoveFile()
+
+		if err == nil {
+			t.Fatalf("RemoveFile expecting error: %s", err)
+		}
 	})
 }
 
