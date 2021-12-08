@@ -53,7 +53,7 @@ func (a *App) initialize() {
 	}
 
 	a.FileSys.Name = "test.json"
-	a.FileSys.Path = dir + "/tmp/" + a.FileSys.Name
+	a.FileSys.Path = dir + "/tmp/"
 
 	isExist := a.FileSys.IsFileExist()
 

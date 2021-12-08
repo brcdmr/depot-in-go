@@ -64,7 +64,7 @@ func (a *ApiServer) AddValue() http.HandlerFunc {
 
 		a.store.AddItemToStore(body.Key, body.Value)
 
-		ResponseWithJSON(w, http.StatusOK, r.Body) //statusaccepted??
+		ResponseWithJSON(w, http.StatusOK, body) //statusaccepted??
 	}
 }
 

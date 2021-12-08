@@ -19,7 +19,7 @@ func (fs *FileSystem) IsFileExist() bool {
 		return false
 	}
 
-	_, err := os.Stat(fs.Path)
+	_, err := os.Stat(fs.Path + fs.Name)
 	return !os.IsNotExist(err)
 }
 
