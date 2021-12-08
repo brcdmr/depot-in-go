@@ -70,6 +70,7 @@ func (a *App) initialize() {
 
 func (a *App) routes() {
 	a.Mux = http.NewServeMux()
+	a.Mux.HandleFunc("/", a.Server.Home().ServeHTTP)
 	a.Mux.HandleFunc("/getvalue", a.Server.GetValue().ServeHTTP)
 	a.Mux.HandleFunc("/setvalue", a.Server.AddValue().ServeHTTP)
 	a.Mux.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
@@ -87,7 +88,10 @@ func (a *App) run(port string) {
 func (a *App) startFileScheduler(duration time.Duration) {
 
 	for range time.Tick(duration * time.Second) { // to do: change to min
-		log.Printf("%s minutes have passed and called write file function!!", duration.String())
+		// timeStamp := time.Now().Unix()
+
+		// a.FileSys.Name = fmt.Sprintf("%d-data.json", timeStamp)
+		log.Printf("%s - %s minutes have passed and called write file function!!", a.FileSys.Name, duration.String())
 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
 	}
 	// time.AfterFunc(duration, func() {

@@ -77,3 +77,12 @@ func (a *ApiServer) Flush() http.HandlerFunc {
 		ResponseWithJSON(w, http.StatusNoContent, nil)
 	}
 }
+
+func (a *ApiServer) Home() http.HandlerFunc {
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		homeBody := "Depot-in-go RESTApi is running"
+		ResponseWithJSON(w, http.StatusAccepted, homeBody)
+	}
+}
