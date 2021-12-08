@@ -14,7 +14,7 @@ type InMemoryStore struct {
 
 func NewInMemoryStore(initialStoreData map[string]string) *InMemoryStore {
 	return &InMemoryStore{
-		initialStoreData, //map[string]string{}
+		initialStoreData,
 		sync.RWMutex{},
 	}
 }
