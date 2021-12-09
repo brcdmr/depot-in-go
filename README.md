@@ -2,8 +2,8 @@
 
 A RESTful API project developed with Go which has below properties / functions:
 
-    * deployed on Hereoku and linked to GitHub (main) for automatic deploys
-    * can be accessed via https://depotingo.herokuapp.com/
+    * deployed on Heroku and linked to GitHub (main) for automatic deployment
+    * can be accessed via [https://depotingo.herokuapp.com/]
     * three different endpoints available (getvalue / setvalue / flush)
     * thread safe InMemoryStorage
     * InMemoryStorage data is saved at given interval
@@ -90,3 +90,6 @@ You can call with default port, or you can change it.
 
 #### /flush
 * `GET` : Flush store data
+
+
+
