@@ -40,13 +40,13 @@ func createTempFile(t testing.TB, initialData []byte) (StubFileSystem, func()) {
 
 }
 
-func initWriteStub(t testing.TB) StubFileSystem {
+func initWriteDirStub(t testing.TB) StubFileSystem {
 	dir, _ := filepath.Abs("./")
 
 	tmp := StubFileSystem{}
 
-	tmp.Path = dir
-	tmp.Name = "unitTestW.json"
+	tmp.Path = dir + "/test/"
+	tmp.Name = "131232-data.json"
 
 	return tmp
 }
@@ -60,7 +60,7 @@ func Test_WriteFile(t *testing.T) {
 			"key2": "value2",
 		}
 
-		stub := initWriteStub(t)
+		stub := initWriteDirStub(t)
 
 		fileSys := &repository.FileSystem{Path: stub.Path, Name: stub.Name}
 
@@ -166,16 +166,36 @@ func Test_SearchSavedFileName(t *testing.T) {
 
 	t.Run(t.Name(), func(t *testing.T) {
 
-		stData := map[string]string{}
-		testFile, cleanTestFile := createTempFile(t, convertToJson(stData))
-		defer cleanTestFile()
+		stub := initWriteDirStub(t)
 
-		fileSys := &repository.FileSystem{Path: testFile.Path, Name: testFile.Name}
+		fileSys := &repository.FileSystem{Path: stub.Path, Name: stub.Name}
+
+		_ = fileSys.WriteFile(make(map[string]string), stub.Name)
 
 		got := fileSys.SearchSavedFileName()
-		want := testFile.Name
-		if got != testFile.Name {
+		want := stub.Name
+
+		if got != want {
 			t.Fatalf("SearchSavedFileName error: got %s, want %s", got, want)
 		}
+
+		fileSys.RemoveFile(stub.Name)
+	})
+}
+
+func Test_SearchSavedFileName_NotFound(t *testing.T) {
+
+	t.Run(t.Name(), func(t *testing.T) {
+
+		stub := initWriteDirStub(t)
+		fileSys := &repository.FileSystem{Path: stub.Path, Name: stub.Name}
+
+		got := fileSys.SearchSavedFileName()
+		want := ""
+
+		if got != want {
+			t.Fatalf("SearchSavedFileName error: got %s, want %s", got, want)
+		}
+
 	})
 }
