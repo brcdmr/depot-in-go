@@ -5,6 +5,7 @@ type InMemoryStore struct {
 	store chan func(map[string]string)
 }
 
+// NewStorage with initialStoreData
 func NewInMemoryStore(initialStoreData map[string]string) *InMemoryStore {
 	s := &InMemoryStore{
 		store: make(chan func(map[string]string)),
@@ -22,6 +23,8 @@ func (st *InMemoryStore) loopItems(initialStoreData map[string]string) {
 	}
 }
 
+// Set the value into the store at the specified key
+// If an entry already available, that entry will be overwritten
 func (st *InMemoryStore) AddItemToStore(key string, value string) {
 
 	st.store <- func(items map[string]string) {
@@ -50,6 +53,7 @@ func (st *InMemoryStore) FlushStore() {
 	}
 }
 
+// AllData retrieves all entries in the store
 func (st *InMemoryStore) GetAllStoreData() map[string]string {
 	allData := make(chan map[string]string, 1)
 	st.store <- func(items map[string]string) {

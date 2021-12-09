@@ -25,12 +25,13 @@ func main() {
 
 	var Port string = os.Getenv("PORT")
 	var LogToFile string = os.Getenv("WRITELOGFILE")
-	var Interval time.Duration = 30
+	var Interval time.Duration = 1
 
 	if Port == "" {
 		Port = "8888"
 	}
 
+	// this flag is used to export .log file
 	if LogToFile == "YES" {
 		logFileName := "application.log"
 		logFile, _ := os.OpenFile(logFileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
@@ -46,6 +47,7 @@ func main() {
 
 }
 
+// Initialize the application
 func (a *App) initialize(interval time.Duration) {
 
 	dir, err := filepath.Abs("./../../")
@@ -61,6 +63,7 @@ func (a *App) initialize(interval time.Duration) {
 
 }
 
+// Configures the routes definitions
 func (a *App) routes() {
 
 	a.Mux = http.NewServeMux()
@@ -73,6 +76,7 @@ func (a *App) routes() {
 	a.Mux.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
 }
 
+// Runs the application
 func (a *App) run(port string) {
 	log.Printf("version %s listening on port %s", version, port)
 	err := http.ListenAndServe(":"+port, api.LoggingMiddleware(a.Mux))
@@ -82,6 +86,8 @@ func (a *App) run(port string) {
 	}
 }
 
+// Gets InitialStoreData,
+// If there is a saved file within given format, returns fileData
 func (a *App) getInitStoreData() map[string]string {
 
 	found := a.FileSys.SearchSavedFileName()
@@ -93,9 +99,10 @@ func (a *App) getInitStoreData() map[string]string {
 	return make(map[string]string)
 }
 
+// Starts a scheduler for saving data to file in given interval (Minute)
 func (a *App) startFileScheduler(duration time.Duration) {
 
-	for range time.Tick(duration * time.Second) {
+	for range time.Tick(duration * time.Minute) {
 		timeStamp := time.Now().Unix()
 
 		newFileName := fmt.Sprintf("%d-data.json", timeStamp)

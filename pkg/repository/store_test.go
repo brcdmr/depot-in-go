@@ -93,34 +93,6 @@ func Test_GetItemFromStore(t *testing.T) {
 	})
 }
 
-/*
-func Test_GetItemFromStore_ErrorCase(t *testing.T) {
-	t.Run(t.Name(), func(t *testing.T) {
-
-		initData := map[string]string{
-			"Amsterdam": "Netherlands",
-			"Brussels":  "Belgium",
-			"Paris":     "France",
-			"Madrid":    "Spain",
-		}
-
-		inMemStore := repository.NewInMemoryStore(initData)
-
-		t.Run(t.Name(), func(t *testing.T) {
-			got := inMemStore.GetItemFromStore("Istanbul")
-			// if got != cs.want {
-			// 	t.Errorf("Not correct get item from store, got %q, want %q", got, cs.want)
-			// }
-
-			if err == nil {
-				t.Errorf("Expected error case, got %s", err)
-			}
-
-		})
-
-	})
-}
-*/
 func assertStoreDataCount(t testing.TB, want, got map[string]string) {
 	t.Helper()
 	if len(got) != len(want) {

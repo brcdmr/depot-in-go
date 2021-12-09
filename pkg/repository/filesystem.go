@@ -12,9 +12,9 @@ import (
 type FileSystem struct {
 	Path string
 	Name string
-	//lock sync.Mutex
 }
 
+// Checks the file in the given path
 func (fs *FileSystem) IsFileExist() bool {
 	if fs.Path == "" {
 		return false
@@ -24,6 +24,8 @@ func (fs *FileSystem) IsFileExist() bool {
 	return !os.IsNotExist(err)
 }
 
+// Writes data in json format to a file named by filename.
+// If the file does not exist, WriteFile creates it with full permissions
 func (fs *FileSystem) WriteFile(data map[string]string, fileName string) string {
 	dataToJson, err := json.Marshal(data)
 	if err != nil {
@@ -39,6 +41,7 @@ func (fs *FileSystem) WriteFile(data map[string]string, fileName string) string 
 
 }
 
+// ReadFile reads the file named by filename and returns the contents
 func (fs *FileSystem) ReadFile(fileName string) map[string]string {
 	fileDataBytes, err := ioutil.ReadFile(fs.Path + fileName)
 
@@ -50,16 +53,17 @@ func (fs *FileSystem) ReadFile(fileName string) map[string]string {
 	return fs.convertFileData(fileDataBytes)
 }
 
+// Remove removes the named file
 func (fs *FileSystem) RemoveFile(fileName string) error {
 	err := os.Remove(fs.Path + fileName)
 
 	if err != nil {
 		return err
-		//log.Fatalf("File remove error: %s %v", fs.Path, err)
 	}
 	return nil
 }
 
+// Converts Json file data to store data type
 func (fs *FileSystem) convertFileData(fileData []byte) map[string]string {
 	var convertedData map[string]string
 	err := json.Unmarshal(fileData, &convertedData)
@@ -69,6 +73,7 @@ func (fs *FileSystem) convertFileData(fileData []byte) map[string]string {
 	return convertedData
 }
 
+// Search fileName in files which are found in given path
 func (fs *FileSystem) SearchSavedFileName() string {
 	var files []string
 

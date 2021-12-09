@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Logging HTTP requests
 func LoggingMiddleware(target http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 

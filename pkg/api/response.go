@@ -11,6 +11,7 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
+// Returns a JSON object of the payload with statusCode
 func ResponseWithJSON(w http.ResponseWriter, statusCode int, payload interface{}) {
 
 	response, err := json.Marshal(payload)
@@ -26,7 +27,8 @@ func ResponseWithJSON(w http.ResponseWriter, statusCode int, payload interface{}
 	w.Write([]byte(response))
 }
 
+// Returns a JSON error object of the payload with statusCode and error message
 func ResponseError(w http.ResponseWriter, statusCode int, errMessage string) {
-	// ResponseWithJSON(w, statusCode, map[string]string{"Error": errMessage})
+
 	ResponseWithJSON(w, statusCode, ErrorResponse{Code: statusCode, Status: "Error", Message: errMessage})
 }

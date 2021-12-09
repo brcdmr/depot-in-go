@@ -24,10 +24,10 @@ func NewApiServer(s DataStore) ApiServer {
 	return ApiServer{store: s}
 }
 
+// GetValue from InMemoryStore
 func (a *ApiServer) GetValue() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		//key := strings.TrimPrefix(r.URL.Path, "/getvalue/")
 		keys := r.URL.Query()["key"]
 
 		if len(keys[0]) < 1 {
@@ -48,6 +48,7 @@ func (a *ApiServer) GetValue() http.HandlerFunc {
 	}
 }
 
+// AddValue to InMemoryStore
 func (a *ApiServer) AddValue() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -68,6 +69,7 @@ func (a *ApiServer) AddValue() http.HandlerFunc {
 	}
 }
 
+// Delete AllData from InMemoryStore
 func (a *ApiServer) Flush() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
