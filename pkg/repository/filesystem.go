@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"regexp"
 )
 
 type FileSystem struct {
@@ -68,21 +69,23 @@ func (fs *FileSystem) convertFileData(fileData []byte) map[string]string {
 	return convertedData
 }
 
-/*
-func (fs *FileSystem) ReadFile() map[string]string {
-	osfile, err := os.OpenFile(fs.Name, os.O_RDWR|os.O_CREATE, 0666)
+func (fs *FileSystem) SearchSavedFileName() string {
+	var files []string
 
-	if err != nil {
-		log.Fatalf("File opening error: %s %v", fs.Name, err)
+	fileNameRegEx, _ := regexp.Compile("^.*-data.json$")
+	fileNames, _ := ioutil.ReadDir(fs.Path)
 
+	for _, fl := range fileNames {
+
+		if fileNameRegEx.MatchString(fl.Name()) {
+			files = append(files, fl.Name())
+
+		}
 	}
 
-	fileDataBytes, err := ioutil.ReadAll(osfile)
-	if err != nil {
-		log.Fatalf("File reading error: %s %v", fs.Name, err)
-
+	if len(files) == 1 {
+		return files[0]
 	}
+	return ""
 
-	return fs.convertFileData(fileDataBytes)
 }
-*/

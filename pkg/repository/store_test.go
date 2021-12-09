@@ -1,6 +1,5 @@
 package repository_test
 
-/*
 import (
 	"depot/pkg/repository"
 	"testing"
@@ -9,7 +8,8 @@ import (
 func Test_FlushStore(t *testing.T) {
 
 	t.Run(t.Name(), func(t *testing.T) {
-		inMemStore := &repository.InMemoryStore{}
+		inMemStore := repository.NewInMemoryStore(make(map[string]string))
+		inMemStore.AddItemToStore("item1", "val1")
 
 		inMemStore.FlushStore()
 		storeData := inMemStore.GetAllStoreData()
@@ -28,6 +28,7 @@ func Test_AddItemFromStore_OneItem(t *testing.T) {
 		got := inMemStore.GetAllStoreData()
 
 		assertStoreDataCount(t, want, got)
+
 	})
 }
 func Test_AddItemFromStore_More(t *testing.T) {
@@ -81,13 +82,9 @@ func Test_GetItemFromStore(t *testing.T) {
 
 		for _, cs := range cases {
 			t.Run(cs.name, func(t *testing.T) {
-				got, err := inMemStore.GetItemFromStore(cs.keyWord)
+				got := inMemStore.GetItemFromStore(cs.keyWord)
 				if got != cs.want {
 					t.Errorf("Not correct get item from store, got %q, want %q", got, cs.want)
-				}
-
-				if err != nil {
-					t.Errorf("Not expected error case, got %s", err)
 				}
 
 			})
@@ -96,6 +93,7 @@ func Test_GetItemFromStore(t *testing.T) {
 	})
 }
 
+/*
 func Test_GetItemFromStore_ErrorCase(t *testing.T) {
 	t.Run(t.Name(), func(t *testing.T) {
 
@@ -109,7 +107,7 @@ func Test_GetItemFromStore_ErrorCase(t *testing.T) {
 		inMemStore := repository.NewInMemoryStore(initData)
 
 		t.Run(t.Name(), func(t *testing.T) {
-			_, err := inMemStore.GetItemFromStore("Istanbul")
+			got := inMemStore.GetItemFromStore("Istanbul")
 			// if got != cs.want {
 			// 	t.Errorf("Not correct get item from store, got %q, want %q", got, cs.want)
 			// }
@@ -122,11 +120,10 @@ func Test_GetItemFromStore_ErrorCase(t *testing.T) {
 
 	})
 }
-
+*/
 func assertStoreDataCount(t testing.TB, want, got map[string]string) {
 	t.Helper()
 	if len(got) != len(want) {
 		t.Errorf("Not correct response body, got %q, want %q", got, want)
 	}
 }
-*/

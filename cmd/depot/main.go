@@ -3,6 +3,7 @@ package main
 import (
 	"depot/pkg/api"
 	"depot/pkg/repository"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -38,34 +39,24 @@ func main() {
 	}
 
 	a.initialize(Interval)
-
 	a.routes()
-	//go a.startFileScheduler(Interval)
+	go a.startFileScheduler(Interval)
 	a.run(Port)
-	//select {}
+	select {}
 
 }
 
 func (a *App) initialize(interval time.Duration) {
+
 	dir, err := filepath.Abs("./../../")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	a.FileSys.Name = "test.json"
 	a.FileSys.Path = dir + "/tmp/"
 
-	// isExist := a.FileSys.IsFileExist()
-
-	// if isExist {
-	// 	storeData := a.FileSys.ReadFile()
-	// 	a.Repo = repository.NewInMemoryStore(storeData, 30)
-	// } else {
-	// 	a.Repo = repository.NewInMemoryStore(make(map[string]string), 30)
-	// }
-
-	a.Repo = repository.NewInMemoryStore(make(map[string]string), interval, a.FileSys.Path)
-
+	initialStoreData := a.getInitStoreData()
+	a.Repo = repository.NewInMemoryStore(initialStoreData)
 	a.Server = api.NewApiServer(a.Repo)
 
 }
@@ -90,16 +81,33 @@ func (a *App) run(port string) {
 	}
 }
 
-// func (a *App) startFileScheduler(duration time.Duration) {
+func (a *App) getInitStoreData() map[string]string {
 
-// 	for range time.Tick(duration * time.Second) { // to do: change to min
-// 		// timeStamp := time.Now().Unix()
+	found := a.FileSys.SearchSavedFileName()
+	if found != "" {
+		a.FileSys.Name = found
+		return a.FileSys.ReadFile(a.FileSys.Name)
+	}
 
-// 		// a.FileSys.Name = fmt.Sprintf("%d-data.json", timeStamp)
-// 		log.Printf("%s - %s minutes have passed and called write file function!!", a.FileSys.Name, duration.String())
-// 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
-// 	}
-// 	// time.AfterFunc(duration, func() {
-// 	// 	a.FileSys.WriteFile(a.Repo.GetAllStoreData())
-// 	// })
-// }
+	return make(map[string]string)
+}
+
+func (a *App) startFileScheduler(duration time.Duration) {
+
+	for range time.Tick(duration * time.Second) {
+		timeStamp := time.Now().Unix()
+
+		newFileName := fmt.Sprintf("%d-data.json", timeStamp)
+
+		log.Printf("%s - %s minutes have passed and called write file function!!", newFileName, duration.String())
+		a.FileSys.WriteFile(a.Repo.GetAllStoreData(), newFileName)
+
+		if len(a.FileSys.Name) > 0 {
+			a.FileSys.RemoveFile(a.FileSys.Name)
+		}
+
+		a.FileSys.Name = newFileName
+
+	}
+
+}
