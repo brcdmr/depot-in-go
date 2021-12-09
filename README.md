@@ -113,6 +113,10 @@ You can call with default port, or you can change it.
 #### /flush
 * `GET` : Flush store data
 
-Returns 204 No Content Status Code
+```
+# Returns 204 No Content Status Code
+
+```
+
 
 
