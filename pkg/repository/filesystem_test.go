@@ -64,13 +64,13 @@ func Test_WriteFile(t *testing.T) {
 
 		fileSys := &repository.FileSystem{Path: stub.Path, Name: stub.Name}
 
-		got := fileSys.WriteFile(data)
+		got := fileSys.WriteFile(data, stub.Name)
 
 		if len(got) == 0 {
 			t.Fatalf("WriteFile error: %s", got)
 		}
 
-		fileSys.RemoveFile()
+		fileSys.RemoveFile(stub.Name)
 	})
 }
 func Test_ReadFile(t *testing.T) {
@@ -87,7 +87,7 @@ func Test_ReadFile(t *testing.T) {
 
 		fileSys := &repository.FileSystem{Path: testFile.Path, Name: testFile.Name}
 
-		got := fileSys.ReadFile()
+		got := fileSys.ReadFile(testFile.Name)
 
 		equal := reflect.DeepEqual(want, got)
 		if !equal {
@@ -106,7 +106,7 @@ func Test_RemoveFile(t *testing.T) {
 
 		fileSys := &repository.FileSystem{Path: testFile.Path, Name: testFile.Name}
 
-		err := fileSys.RemoveFile()
+		err := fileSys.RemoveFile(testFile.Name)
 
 		if err != nil {
 			t.Fatalf("RemoveFile error: %s", err)
@@ -119,7 +119,7 @@ func Test_RemoveFile_ErrCase(t *testing.T) {
 
 		fileSys := &repository.FileSystem{Path: "testFile.Path", Name: "testFile.Name"}
 
-		err := fileSys.RemoveFile()
+		err := fileSys.RemoveFile("testf")
 
 		if err == nil {
 			t.Fatalf("RemoveFile expecting error: %s", err)

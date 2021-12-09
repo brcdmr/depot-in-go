@@ -23,12 +23,12 @@ func (fs *FileSystem) IsFileExist() bool {
 	return !os.IsNotExist(err)
 }
 
-func (fs *FileSystem) WriteFile(data map[string]string) string {
+func (fs *FileSystem) WriteFile(data map[string]string, fileName string) string {
 	dataToJson, err := json.Marshal(data)
 	if err != nil {
 		log.Fatalf("File data marshal error: %s %v", data, err)
 	}
-	writeErr := ioutil.WriteFile(fs.Path+fs.Name, dataToJson, 0777)
+	writeErr := ioutil.WriteFile(fs.Path+fileName, dataToJson, 0777)
 
 	if writeErr != nil {
 		log.Fatalf("File system writing error: %s %v", dataToJson, err)
@@ -38,8 +38,8 @@ func (fs *FileSystem) WriteFile(data map[string]string) string {
 
 }
 
-func (fs *FileSystem) ReadFile() map[string]string {
-	fileDataBytes, err := ioutil.ReadFile(fs.Path + fs.Name)
+func (fs *FileSystem) ReadFile(fileName string) map[string]string {
+	fileDataBytes, err := ioutil.ReadFile(fs.Path + fileName)
 
 	if err != nil {
 		log.Fatalf("File reading error: %s %v", fs.Path, err)
@@ -49,8 +49,8 @@ func (fs *FileSystem) ReadFile() map[string]string {
 	return fs.convertFileData(fileDataBytes)
 }
 
-func (fs *FileSystem) RemoveFile() error {
-	err := os.Remove(fs.Path + fs.Name)
+func (fs *FileSystem) RemoveFile(fileName string) error {
+	err := os.Remove(fs.Path + fileName)
 
 	if err != nil {
 		return err

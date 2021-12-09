@@ -37,16 +37,16 @@ func main() {
 		log.SetOutput(logFile)
 	}
 
-	a.initialize()
+	a.initialize(Interval)
 
 	a.routes()
-	go a.startFileScheduler(Interval)
+	//go a.startFileScheduler(Interval)
 	a.run(Port)
-	select {}
+	//select {}
 
 }
 
-func (a *App) initialize() {
+func (a *App) initialize(interval time.Duration) {
 	dir, err := filepath.Abs("./../../")
 	if err != nil {
 		log.Fatal(err)
@@ -55,14 +55,16 @@ func (a *App) initialize() {
 	a.FileSys.Name = "test.json"
 	a.FileSys.Path = dir + "/tmp/"
 
-	isExist := a.FileSys.IsFileExist()
+	// isExist := a.FileSys.IsFileExist()
 
-	if isExist {
-		storeData := a.FileSys.ReadFile()
-		a.Repo = repository.NewInMemoryStore(storeData)
-	} else {
-		a.Repo = repository.NewInMemoryStore(make(map[string]string))
-	}
+	// if isExist {
+	// 	storeData := a.FileSys.ReadFile()
+	// 	a.Repo = repository.NewInMemoryStore(storeData, 30)
+	// } else {
+	// 	a.Repo = repository.NewInMemoryStore(make(map[string]string), 30)
+	// }
+
+	a.Repo = repository.NewInMemoryStore(make(map[string]string), interval, a.FileSys.Path)
 
 	a.Server = api.NewApiServer(a.Repo)
 
@@ -88,16 +90,16 @@ func (a *App) run(port string) {
 	}
 }
 
-func (a *App) startFileScheduler(duration time.Duration) {
+// func (a *App) startFileScheduler(duration time.Duration) {
 
-	for range time.Tick(duration * time.Second) { // to do: change to min
-		// timeStamp := time.Now().Unix()
+// 	for range time.Tick(duration * time.Second) { // to do: change to min
+// 		// timeStamp := time.Now().Unix()
 
-		// a.FileSys.Name = fmt.Sprintf("%d-data.json", timeStamp)
-		log.Printf("%s - %s minutes have passed and called write file function!!", a.FileSys.Name, duration.String())
-		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
-	}
-	// time.AfterFunc(duration, func() {
-	// 	a.FileSys.WriteFile(a.Repo.GetAllStoreData())
-	// })
-}
+// 		// a.FileSys.Name = fmt.Sprintf("%d-data.json", timeStamp)
+// 		log.Printf("%s - %s minutes have passed and called write file function!!", a.FileSys.Name, duration.String())
+// 		a.FileSys.WriteFile(a.Repo.GetAllStoreData())
+// 	}
+// 	// time.AfterFunc(duration, func() {
+// 	// 	a.FileSys.WriteFile(a.Repo.GetAllStoreData())
+// 	// })
+// }
