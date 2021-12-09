@@ -24,7 +24,7 @@ func createTempFile(t testing.TB, initialData []byte) (StubFileSystem, func()) {
 	tmp.Path = dir
 
 	var err error
-	tmp.File, err = ioutil.TempFile(tmp.Path, "*.json")
+	tmp.File, err = ioutil.TempFile(tmp.Path, "*-data.json")
 	if err != nil {
 		t.Fatalf("Create temp file err %v", err)
 	}
@@ -162,18 +162,20 @@ func Test_IsFileExist_False(t *testing.T) {
 	})
 }
 
-// func Test_WriteFile(t *testing.T) {
-// 	t.Run(t.Name(), func(t *testing.T) {
-// 		fileSys := &repository.FileSystem{Path: "/testfile.json", Name: ""}
-// 		fileData := map[string]string{
-// 			"hello": "file",
-// 		}
-// 		fileSys.WriteFile(fileData)
-// 		got := fileSys.IsFileExist()
+func Test_SearchSavedFileName(t *testing.T) {
 
-// 		if !got {
-// 			t.Fatalf("Write file error")
-// 		}
+	t.Run(t.Name(), func(t *testing.T) {
 
-// 	})
-// }
+		stData := map[string]string{}
+		testFile, cleanTestFile := createTempFile(t, convertToJson(stData))
+		defer cleanTestFile()
+
+		fileSys := &repository.FileSystem{Path: testFile.Path, Name: testFile.Name}
+
+		got := fileSys.SearchSavedFileName()
+		want := testFile.Name
+		if got != testFile.Name {
+			t.Fatalf("SearchSavedFileName error: got %s, want %s", got, want)
+		}
+	})
+}
