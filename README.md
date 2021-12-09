@@ -1,7 +1,7 @@
 # A RESTful API with Go --> depot-in-go
 
 A RESTful API project developed with Go which has below properties / functions:
-can be accessed via https://depotingo.herokuapp.com/
+--> https://depotingo.herokuapp.com/
 
     * deployed on Heroku and linked to GitHub (main) for automatic deployment
     * can be accessed via https://depotingo.herokuapp.com/
