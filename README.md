@@ -1,6 +1,21 @@
 # A RESTful API with Go --> depot-in-go
 
-A RESTful API project developed for
+A RESTful API project developed with Go which has below properties / functions:
+
+    * deployed on Hereoku and linked to GitHub (main) for automatic deploys
+    * can be accessed via https://depotingo.herokuapp.com/
+    * three different endpoints available (getvalue / setvalue / flush)
+    * thread safe InMemoryStorage
+    * InMemoryStorage data is saved at given interval
+    * httpServer with LoggingMiddleware, enables exporting .log file
+    * has DockerFile 
+    * has MakeFile with GolangLint 
+
+    * code coverage documentations are generated 
+        - apiPackage Test Coverage, for html view run -> go tool cover -html=apitestcoverage.out
+        - repositoryPackage Test Coverage, for html view run -> go tool cover -html=repository.out
+
+
 
 ## Project Guide 
 ```bash
@@ -12,21 +27,21 @@ go get github.com/brcdmr/depot-in-go
 # Build and Run
 cd depot-in-go
 make
-// after running  -make- command, building will be started along with below build command 
-// go build -ldflags "-X main.version=v1.0.0-7-g5222465-dirty" -o depot ./cmd/depot
+--> after running  -make- command, building will be started along with below build command 
+--> go build -ldflags "-X main.version=v1.0.0-7-g5222465-dirty" -o depot ./cmd/depot
 
 ./depot
-// after running executable, listening port and version number can be seen
+--> after running executable, listening port and version number can be seen
 
 make docker
-// deploy to docker
+--> deploy to docker
 
 You can call with default port, or you can change it.
 
 # Default API Endpoint : http://localhost:8888
 ```
 
-## Project Structure
+## Project Layout
 ```
 ├── build
 │   └── DockerFile
@@ -39,16 +54,19 @@ You can call with default port, or you can change it.
 │   │   ├── api_test.go  
 │   │   ├── logging.go  
 │   │   ├── response.go  
-│   │   └── apitestcoverage.out apiPackage Test Coverage, for html view run -> go tool cover -html=apitestcoverage.out
+│   │   ├── apiDoc.out  
+│   │   └── apitestcoverage.out 
 │   └── repository          
 │       ├── filesystem.go   
 │       ├── filesystem_test.go  
 │       ├── store.go  
 │       ├── store_test.go  
-│       └── repository.out  repositoryPackage Test Coverage, for html view run -> go tool cover -html=repository.out
+│       ├── repositoryDoc.out  
+│       └── repositorytestcoverage.out 
 ├── tmp
-│   └── test.json
+│   └── samples.json
 └── go.mod
+└── go.sum
 └── Makefile
 ```
 
@@ -59,6 +77,16 @@ You can call with default port, or you can change it.
 
 #### /setvalue
 * `POST` : Send key / value pair in request body to store data in memoryStore
+
+```
+# Sample Post Body
+
+    {
+        "Key":"Paris",
+        "Value":"France"
+    }
+
+```
 
 #### /flush
 * `GET` : Flush store data
