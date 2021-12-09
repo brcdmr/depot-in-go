@@ -64,10 +64,10 @@ func (a *App) initialize(interval time.Duration) {
 func (a *App) routes() {
 
 	a.Mux = http.NewServeMux()
-	a.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "index.html")
-	})
-	//a.Mux.HandleFunc("/", a.Server.Home().ServeHTTP)
+	// a.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	http.ServeFile(w, r, "index.html")
+	// })
+	a.Mux.HandleFunc("/", a.Server.Home().ServeHTTP)
 	a.Mux.HandleFunc("/getvalue", a.Server.GetValue().ServeHTTP)
 	a.Mux.HandleFunc("/setvalue", a.Server.AddValue().ServeHTTP)
 	a.Mux.HandleFunc("/flush", a.Server.Flush().ServeHTTP)
