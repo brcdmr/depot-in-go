@@ -75,11 +75,22 @@ You can call with default port, or you can change it.
 #### /getvalue/:key
 * `GET` : Get a value from in memoryStore
 
+```
+# Sample Error Response with 404 Not Found Status Code
+
+    {
+        "code": 404,
+        "status": "Error",
+        "message": "brc does not found in the storage"
+    }
+
+```
+
 #### /setvalue
 * `POST` : Send key / value pair in request body to store data in memoryStore
 
 ```
-# Sample Post Body
+# Sample Post Body 
 
     {
         "Key":"Paris",
@@ -88,8 +99,20 @@ You can call with default port, or you can change it.
 
 ```
 
+```
+# Sample Error Response with 400 Bad Request Status Code
+
+    {
+        "code": 400,
+        "status": "Error",
+        "message": "invalid character '\"' after object key:value pair"
+    }
+
+```
+
 #### /flush
 * `GET` : Flush store data
 
+Returns 204 No Content Status Code
 
 
