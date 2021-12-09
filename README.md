@@ -2,16 +2,15 @@
 
 A RESTful API project developed with Go which has below properties / functions:
 
-    * deployed on Heroku and linked to GitHub (main) for automatic deployment
-    * can be accessed via [https://depotingo.herokuapp.com/]
-    * three different endpoints available (getvalue / setvalue / flush)
-    * thread safe InMemoryStorage
-    * InMemoryStorage data is saved at given interval
-    * httpServer with LoggingMiddleware, enables exporting .log file
-    * has DockerFile 
-    * has MakeFile with GolangLint 
-
-    * code coverage documentations are generated 
+    deployed on Heroku and linked to GitHub (main) for automatic deployment
+    can be accessed via https://depotingo.herokuapp.com/
+    three different endpoints available (getvalue / setvalue / flush)
+    thread safe InMemoryStorage
+    InMemoryStorage data is saved at given interval
+    httpServer with LoggingMiddleware, enables exporting .log file
+    has DockerFile 
+    has MakeFile with Golang Lint 
+    code coverage documentations are generated 
         - apiPackage Test Coverage, for html view run -> go tool cover -html=apitestcoverage.out
         - repositoryPackage Test Coverage, for html view run -> go tool cover -html=repository.out
 
