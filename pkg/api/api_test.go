@@ -16,8 +16,8 @@ func (s *StubDataStore) AddItemToStore(key string, value string) {
 	s.store[key] = value
 }
 
-func (s *StubDataStore) GetItemFromStore(key string) (string, error) {
-	return s.store[key], nil
+func (s *StubDataStore) GetItemFromStore(key string) string {
+	return s.store[key]
 }
 
 func (s *StubDataStore) FlushStore() {

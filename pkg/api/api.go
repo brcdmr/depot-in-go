@@ -7,7 +7,7 @@ import (
 
 type DataStore interface {
 	AddItemToStore(key string, value string)
-	GetItemFromStore(key string) (string, error)
+	GetItemFromStore(key string) string
 	FlushStore()
 }
 
@@ -37,10 +37,10 @@ func (a *ApiServer) GetValue() http.HandlerFunc {
 
 		key := keys[0]
 
-		dt, err := a.store.GetItemFromStore(key)
+		dt := a.store.GetItemFromStore(key)
 
-		if err != nil {
-			ResponseError(w, http.StatusNotFound, err.Error())
+		if dt == "" {
+			ResponseError(w, http.StatusNotFound, key+" does not found in the storage")
 			return
 		}
 
