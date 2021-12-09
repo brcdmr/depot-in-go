@@ -1,0 +1,42 @@
+package api // import "depot/pkg/api"
+
+
+FUNCTIONS
+
+func LoggingMiddleware(target http.Handler) http.Handler
+func ResponseError(w http.ResponseWriter, statusCode int, errMessage string)
+func ResponseWithJSON(w http.ResponseWriter, statusCode int, payload interface{})
+
+TYPES
+
+type ApiServer struct {
+	// Has unexported fields.
+}
+
+func NewApiServer(s DataStore) ApiServer
+
+func (a *ApiServer) AddValue() http.HandlerFunc
+
+func (a *ApiServer) Flush() http.HandlerFunc
+
+func (a *ApiServer) GetValue() http.HandlerFunc
+
+func (a *ApiServer) Home() http.HandlerFunc
+
+type DataStore interface {
+	AddItemToStore(key string, value string)
+	GetItemFromStore(key string) string
+	FlushStore()
+}
+
+type ErrorResponse struct {
+	Code    int    `json:"code"`
+	Status  string `json:"status"`
+	Message string `json:"message"`
+}
+
+type PostBody struct {
+	Key   string
+	Value string
+}
+

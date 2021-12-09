@@ -1,0 +1,37 @@
+package repository // import "depot/pkg/repository"
+
+
+TYPES
+
+type FileSystem struct {
+	Path string
+	Name string
+}
+
+func (fs *FileSystem) IsFileExist() bool
+
+func (fs *FileSystem) ReadFile(fileName string) map[string]string
+
+func (fs *FileSystem) RemoveFile(fileName string) error
+
+func (fs *FileSystem) SearchSavedFileName() string
+
+func (fs *FileSystem) WriteFile(data map[string]string, fileName string) string
+
+type InMemoryStore struct {
+	// Has unexported fields.
+}
+    InMemoryStore is a thread safe store
+
+func NewInMemoryStore(initialStoreData map[string]string) *InMemoryStore
+
+func (st *InMemoryStore) AddItemToStore(key string, value string)
+
+func (st *InMemoryStore) FlushStore()
+    Delete all data from store
+
+func (st *InMemoryStore) GetAllStoreData() map[string]string
+
+func (st *InMemoryStore) GetItemFromStore(key string) string
+    Get retrieves a store data at the specified key
+

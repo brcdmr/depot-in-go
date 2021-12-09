@@ -1,0 +1,22 @@
+mode: count
+depot/pkg/api/api.go:23.42,25.2 1 0
+depot/pkg/api/api.go:27.49,29.54 1 2
+depot/pkg/api/api.go:29.54,33.23 2 2
+depot/pkg/api/api.go:38.3,42.15 3 1
+depot/pkg/api/api.go:47.3,47.41 1 1
+depot/pkg/api/api.go:33.23,36.4 2 1
+depot/pkg/api/api.go:42.15,45.4 2 0
+depot/pkg/api/api.go:51.49,52.54 1 2
+depot/pkg/api/api.go:52.54,60.17 4 2
+depot/pkg/api/api.go:65.3,67.43 2 1
+depot/pkg/api/api.go:60.17,63.4 2 1
+depot/pkg/api/api.go:71.46,73.54 1 2
+depot/pkg/api/api.go:73.54,78.3 2 2
+depot/pkg/api/api.go:81.45,83.54 1 0
+depot/pkg/api/api.go:83.54,87.3 2 0
+depot/pkg/api/logging.go:9.58,10.71 1 0
+depot/pkg/api/logging.go:10.71,16.3 3 0
+depot/pkg/api/response.go:14.83,18.16 2 6
+depot/pkg/api/response.go:24.2,26.27 3 6
+depot/pkg/api/response.go:18.16,22.3 3 0
+depot/pkg/api/response.go:29.78,32.2 1 2
